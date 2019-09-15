@@ -6,7 +6,6 @@ import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import pageobjects.desktop.LoginPage;
 import utilities.APIUtils;
 
 public class SampleAPI{
@@ -20,7 +19,7 @@ public class SampleAPI{
     }
 	
 	public void getRetweetersList(String tweetId) throws Exception {
-		tweetId = "327473909412814850";
+		//tweetId = "327473909412814850";
 		OkHttpClient client = new OkHttpClient();
 
 		HttpUrl url = new HttpUrl.Builder().scheme("https").host("api.twitter.com")
