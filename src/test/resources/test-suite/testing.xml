@@ -3,7 +3,7 @@
    
 	<test name="DirectorMatch">
 		  <classes>
-		    <class name="core.TestFactory" />
+		    <class name="testcases.SampleAPI" />
 		  </classes>
 	</test>
 </suite>

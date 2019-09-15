@@ -1,12 +1,23 @@
 package testcases;
 
-import core.BaseTest;
+import org.testng.annotations.Test;
+
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import pageobjects.desktop.LoginPage;
+import utilities.APIUtils;
 
-public class SampleAPI extends BaseTest{
+public class SampleAPI{
+	
+	
+	@Test
+    public void getTestTweet() throws Exception{
+		APIUtils Utils = new APIUtils();
+		getRetweetersList(Utils.getMaxImpressionTweetId());
+
+    }
 	
 	public void getRetweetersList(String tweetId) throws Exception {
 		tweetId = "327473909412814850";
