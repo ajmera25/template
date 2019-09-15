@@ -1,7 +1,7 @@
 {
-   "person": [
+   "twitterhandles": [
        {
-           "firstName": "Clark",
+           "twitteraccount_id": "1234",
            "lastName": "Kent",
            "job": "Reporter",
            "roll": 20

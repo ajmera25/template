@@ -10,30 +10,35 @@
 
 
    var people = [];
-
-   $.getJSON('people.json', function(data) {
-       $.each(data.person, function(i, f) {
-          var tblRow = "<tr>" + "<td>" + f.firstName + "</td>" +
-           "<td>" + f.lastName + "</td>" + "<td>" + f.job + "</td>" + "<td>" + f.roll + "</td>" + "</tr>"
-           $(tblRow).appendTo("#userdata tbody");
-     });
-
-   });
-
+var table = document.getElementById("userdata");
+   $.getJSON('twitterDetails.json', function(data) {
+      
+Object.keys(data).forEach(function(key){
+var tr = table.insertRow(-1); 
+    var value = data[key];
+    var tabCell = tr.insertCell(-1);
+    tabCell.innerHTML=key;
+    for(i=0;i<value.length;i++) {
+    tabCell = tr.insertCell(-1);
+    tabCell.innerHTML=value[i];
+    }
+    console.log(key + ':' + value[0]);
+});
+});
+ 
 });
 </script>
 </head>
 
 <body>
 
-<div class="wrapper">
-<div class="profile">
+<div id="showData">
    <table id= "userdata" border="2">
   <thead>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Email Address</th>
-            <th>City</th>
+            <th>Twitter Account Id</th>
+            <th>Following Count</th>
+            <th>Followers Count</th>
+            <th>Description</th>
         </thead>
       <tbody>
 
