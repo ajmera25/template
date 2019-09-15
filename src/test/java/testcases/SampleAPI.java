@@ -14,11 +14,7 @@ import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import se.akerfeldt.okhttp.signpost.OkHttpOAuthConsumer;
-import se.akerfeldt.okhttp.signpost.SigningInterceptor;
 import utilities.APIUtils;
-
-import java.io.IOException;
 
 public class SampleAPI{
 	
@@ -28,9 +24,9 @@ public class SampleAPI{
 		APIUtils Utils = new APIUtils();
 		List<String> reTwitterList = getRetweetersList(Utils.getMaxImpressionTweetId());
 		for(String reTwitterId : reTwitterList) {
-			tweetDetails.put(reTwitterId,getFollowerFollowingCount(reTwitterId));
+			tweetDetails.putAll(getFollowerFollowingCount(reTwitterId));
 		}
-		tweetDetails.put("357443081",getFollowerFollowingCount("357443081"));
+		tweetDetails.putAll(getFollowerFollowingCount("357443081"));
 		JSONObject obj = new JSONObject(tweetDetails);
 		System.out.println(obj);
 		
@@ -55,8 +51,9 @@ public class SampleAPI{
 		return retwitterList;
 	}
 	
-	public List<String> getFollowerFollowingCount(String retweeterID) throws Exception {
-		List<String> userProfile = new ArrayList<>();
+	public HashMap<String,List<String>> getFollowerFollowingCount(String retweeterID) throws Exception {
+		HashMap<String,List<String>> userProfile = new HashMap<String,List<String>>();
+		List<String> tweetProfile = new ArrayList<>();
 		OkHttpClient client = new OkHttpClient();
 
 		HttpUrl url = new HttpUrl.Builder().scheme("https").host("api.twitter.com").addPathSegments("/1.1/users/lookup.json")
@@ -67,9 +64,11 @@ public class SampleAPI{
 		 JSONArray array = new JSONArray(response.body().string());
 		 //System.out.println(array);
 			 JSONObject object = array.getJSONObject(0);
-			 userProfile.add(object.get("followers_count").toString());
-			 userProfile.add(object.get("friends_count").toString());
-			userProfile.add(object.get("description").toString());
+			 
+			 tweetProfile.add(object.get("followers_count").toString());
+			 tweetProfile.add(object.get("friends_count").toString());
+			 tweetProfile.add(object.get("description").toString());
+			 userProfile.put(object.get("screen_name").toString(), tweetProfile);
 			return userProfile;
 			 
 		
