@@ -15,7 +15,8 @@ public class DriverManagerFactory {
 
 	private static ThreadLocal<AppiumDriver> threadAppiumDriver = new ThreadLocal<AppiumDriver>();
 	private static ThreadLocal<RemoteWebDriver> threadDesktopWebDriver = new ThreadLocal<RemoteWebDriver>();
-	String hub = System.getProperty("hub");
+//	String hub = System.getProperty("hub");
+	String hub = " http://localhost:4444/wd/hub";
 
 	public AppiumDriver getAppiumDriver() {
 		AppiumDriver wdriver = threadAppiumDriver.get();
@@ -35,7 +36,7 @@ public class DriverManagerFactory {
 		threadDesktopWebDriver.set(driver);
 	}
 	
-	public void initializeDriver(String platform) throws MalformedURLException {
+	public void initializeDriver(String platform)  {
 		if(platform.equals("desktop")) {
 			initializeChromeWebDriver();
 		} else if(platform.equals("mobile")) {
@@ -43,7 +44,7 @@ public class DriverManagerFactory {
 		}
 	}
 	
-	public Object getDriver(String platform) throws MalformedURLException {
+	public Object getDriver(String platform) {
 		if(platform.equals("desktop")) {
 			return getDesktopWebDriver();
 		} else if(platform.equals("mobile")) {
@@ -52,7 +53,7 @@ public class DriverManagerFactory {
 		return null;
 	}
 	
-	public void initializeChromeWebDriver() throws MalformedURLException {
+	public void initializeChromeWebDriver()  {
 		 DesiredCapabilities capabilities = new DesiredCapabilities();
 		 ChromeOptions options = new ChromeOptions();
 	     capabilities.setCapability("platformName", "WINDOWS");
@@ -60,10 +61,14 @@ public class DriverManagerFactory {
 		options.addArguments("--disable-infobars");
 		options.addArguments("--dns-prefetch-disable");
 		options.merge(capabilities);
-		setDesktopWebDriver(new RemoteWebDriver(new URL(hub), options));
+		try {
+			setDesktopWebDriver(new RemoteWebDriver(new URL(hub), options));
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
 	}
 	
-	public void initializeMobileDriver() throws MalformedURLException {
+	public void initializeMobileDriver() {
 		DesiredCapabilities capabilities = new DesiredCapabilities();
 		capabilities.setCapability(CapabilityType.BROWSER_NAME, "chrome");
 	       capabilities.setCapability("deviceName", "9243934");
@@ -72,7 +77,11 @@ public class DriverManagerFactory {
 	        capabilities.setCapability("platformName", "Android");
 	        /*capabilities.setCapability("appPackage", "com.google.android.youtube");
 	        capabilities.setCapability("appActivity", "com.google.android.apps.youtube.app.WatchWhileActivity");*/
-			setAppiumDriver(new AppiumDriver(new URL(hub), capabilities));	
+		try {
+			setAppiumDriver(new AppiumDriver(new URL(hub), capabilities));
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void closeAllDriver() {
