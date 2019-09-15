@@ -11,7 +11,11 @@ public class BaseTest {
 
 	@BeforeSuite
 	public void beforeSuite() {
-		
+		DriverManagerFactory DMF = new DriverManagerFactory();
+		DMF.initializeDriver("desktop");
+		driver = DMF.getDesktopWebDriver();
+		driver.get("https://twitter.com/search-home");
+		driver.manage().window().maximize();
 	}
 	
 	@AfterSuite

@@ -8,7 +8,6 @@ public class MaximumAttentionTweet extends BaseTest {
 
     @Test
     public void getTestTweet(){
-      new LoginPage(driver).doLogin("","");
-
+      new LoginPage(driver).doLogin("SurnameTooLong","bharatdemo");
     }
 }
