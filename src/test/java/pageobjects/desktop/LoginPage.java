@@ -25,14 +25,19 @@ public class LoginPage extends BasePage{
 	@FindBy(xpath="//input[@value='Log in']")
 	WebElement btn_Login;
 	
-	public boolean doLogin(String username, String password) throws TestFrameworkException{
+	public boolean doLogin(String username, String password)   {
 		try{
 			pageWebDriverClient.click(loginLink);
 			pageWebDriverClient.clearTextAndType(txt_Username, username);
 			pageWebDriverClient.clearTextAndType(txt_Password, password);
 			return pageWebDriverClient.click(btn_Login);
 		}catch(Exception e){
-			throw new TestFrameworkException("Unable to Login Successfully", e);
+			try {
+				throw new TestFrameworkException("Unable to Login Successfully", e);
+			} catch (TestFrameworkException ex) {
+				ex.printStackTrace();
+			}
+			return false;
 		}
 	}
 
