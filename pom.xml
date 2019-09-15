@@ -28,6 +28,7 @@
 		<testng.version>6.14.3</testng.version>
 		<appium.version>7.1.0</appium.version>
 		<okhttp.version>4.0.1</okhttp.version>
+		<json.version>20180813</json.version>
 	</properties>
 
 	<dependencies>
@@ -50,6 +51,11 @@
 			<groupId>com.squareup.okhttp3</groupId>
 			<artifactId>okhttp</artifactId>
 			<version>${okhttp.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>${json.version}</version>
 		</dependency>
 	</dependencies>
 </project>

@@ -1,27 +1,29 @@
 package utilities;
 
-import java.io.File;
-import java.io.IOException;
+import java.util.HashMap;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import okhttp3.HttpUrl;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class APIUtils {
 
-	public static String getCall(){
-		String videoName = null;
+	
+	public String getMaxImpressionTweetId() {
+		int MaxImpression =0;
+		String tweetId = null;
 		try {
 			OkHttpClient client = new OkHttpClient();
 			
 			HttpUrl url = new HttpUrl.Builder()
 					.scheme("https")
-					.host("")
-					.addPathSegments("")
+					.host("api.twitter.com")
+					.addPathSegments("/1.1/statuses/user_timeline.json")
+					.addQueryParameter("screen_name","stepin_forum")
 					.build();
 			
 			Request request = new Request.Builder()
@@ -29,51 +31,28 @@ public class APIUtils {
 				      .build();
 			
 			 Response response = client.newCall(request).execute();
-			 System.out.println(response.body().string());
+			// JSONObject object = new JSONObject(response.body().string());
+			 JSONArray array = new JSONArray(response.body().string());
+			 HashMap<String,Integer> tweetImpressions = new HashMap<String,Integer>();
+			 System.out.println(array);
+			 for(int i=0;i<array.length();i++) {
+				 JSONObject object = array.getJSONObject(i);
+				 tweetImpressions.put(object.get("id").toString(), object.getInt("retweet_count") + object.getInt("favorite_count"));
+			 }
+			 System.out.println(tweetImpressions);
+			 
+			 for(String str :tweetImpressions.keySet()) {
+				 int currentImpression = tweetImpressions.get(str);
+				 if(MaxImpression<currentImpression) {
+					 MaxImpression = currentImpression;
+					 tweetId = str;
+					 
+				 }
+			 }
+			 System.out.println(tweetId  +  " " + MaxImpression);
 	}catch(Exception e){
 		e.printStackTrace();
 	}
-		return videoName;
-}
-	
-	public static void postCall(String url){
-	try{
-		OkHttpClient client = new OkHttpClient();
-		
-	    RequestBody requestBody = null;
-
-		Request request = new Request.Builder().url("")
-	                .post(requestBody).build();
-	 
-	        Response response = client.newCall(request).execute();
-	}catch(Exception e){
-		e.printStackTrace();
-		
+		return tweetId;
 	}
-}
-	public static void uploadFile() throws IOException{
-	OkHttpClient client = new OkHttpClient();
-	
-	HttpUrl url = new HttpUrl.Builder()
-			.scheme("https")
-			.host("")
-			.addPathSegment("")
-			.build();
-	
-	
-	File file = new File(System.getProperty("user.dir") + "/src/test/resources/testdata/" + "FileName");
-	
-	RequestBody requestBody = new MultipartBody.Builder()
-			.setType(MultipartBody.FORM)
-            .addFormDataPart("txt", file.getName(), RequestBody.create(MediaType.parse("application/json"), file))
-            .build();
-	
-	Request request = new Request.Builder()
-		      .url(url)
-		      .post(requestBody)
-		      .build();
-	
-	 Response response = client.newCall(request).execute();
-	 System.out.println(response.body().string());
-}
-}
+	}
