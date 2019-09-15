@@ -22,6 +22,7 @@ public class BasePage {
 	
 	//So that we can utilize appium driver method
 	public BasePage(AppiumDriver appiumDriver) {
+		//BasePage constructor for appium driver
         this.appiumDriver = appiumDriver;
         PageFactory.initElements(new AppiumFieldDecorator(appiumDriver), this);
         pageWebDriverClient = new WebDriverClient(appiumDriver);

@@ -149,6 +149,17 @@ public class WebDriverClient {
 		}
 	}
 	
+	public void clearTextAndType(WebElement element,
+			String inputText) throws Exception {
+		if(isWebElementEnabled(element)){
+			element.click();
+			element.clear();
+			element.sendKeys(inputText);
+			Thread.sleep(1000);
+		}else{
+			throw new TestFrameworkException("Locator does not exists or is disabled");
+		}
+	}
 	
 	public boolean setText(String locator, String inputText) throws Exception {
 		WebElement element = findElement(locator);
@@ -552,6 +563,8 @@ public class WebDriverClient {
 	
 	public boolean click(WebElement element) throws Exception {
 		try {
+			waitForVisibilityOfElement(element);
+			waitForElementToBeClickable(element);
 			if(isWebElementEnabled(element)){
 				element.click();
 				return true;
@@ -1084,6 +1097,11 @@ public class WebDriverClient {
 	public void sendTabKey() {
 		Actions action = new Actions(myDriver);
 		action.sendKeys(Keys.TAB).build().perform();
+	}
+	
+	public void sendEnterKey() {
+		Actions action = new Actions(myDriver);
+		action.sendKeys(Keys.ENTER).build().perform();
 	}
 	
 	/**
