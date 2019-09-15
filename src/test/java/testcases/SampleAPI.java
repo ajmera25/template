@@ -31,7 +31,6 @@ public class SampleAPI{
     }
 	
 	public List<String> getRetweetersList(String tweetId) throws Exception {
-		//tweetId = "327473909412814850";
 		List<String> retwitterList;
 		OkHttpClient client = new OkHttpClient();
 
@@ -54,7 +53,6 @@ public class SampleAPI{
 		HttpUrl url = new HttpUrl.Builder().scheme("https").host("api.twitter.com").addPathSegments("/1.1/users/lookup.json")
 				.addQueryParameter("user_id",retweeterID).build();
 
-			//System.out.println(url);
 		Request request = new Request.Builder().url(url).build();
 		 Response response = client.newCall(request).execute();
 		 JSONArray array = new JSONArray(response.body().string());
