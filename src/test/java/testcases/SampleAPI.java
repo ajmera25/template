@@ -2,6 +2,7 @@ package testcases;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -19,11 +20,14 @@ public class SampleAPI{
 	
 	@Test
     public void getTestTweet() throws Exception{
+		HashMap<String,List<String>> tweetDetails = new HashMap<>();
 		APIUtils Utils = new APIUtils();
 		List<String> reTwitterList = getRetweetersList(Utils.getMaxImpressionTweetId());
 		for(String reTwitterId : reTwitterList) {
-			System.out.println(getFollowerFollowingCount(reTwitterId));
+			tweetDetails.put(reTwitterId,getFollowerFollowingCount(reTwitterId));
 		}
+		JSONObject obj = new JSONObject(tweetDetails);
+		System.out.println(obj);
     }
 	
 	public List<String> getRetweetersList(String tweetId) throws Exception {
@@ -50,11 +54,11 @@ public class SampleAPI{
 		HttpUrl url = new HttpUrl.Builder().scheme("https").host("api.twitter.com").addPathSegments("/1.1/users/lookup.json")
 				.addQueryParameter("user_id",retweeterID).build();
 
-			System.out.println(url);
+			//System.out.println(url);
 		Request request = new Request.Builder().url(url).build();
 		 Response response = client.newCall(request).execute();
 		 JSONArray array = new JSONArray(response.body().string());
-		 System.out.println(array);
+		 //System.out.println(array);
 			 JSONObject object = array.getJSONObject(0);
 			 userProfile.add(object.get("followers_count").toString());
 			 userProfile.add(object.get("friends_count").toString());
