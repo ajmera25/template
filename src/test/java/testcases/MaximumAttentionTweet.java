@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import org.testng.annotations.Test;
 import pageobjects.desktop.LoginPage;
+import pageobjects.desktop.ProfilePage;
 import pageobjects.desktop.SearchPage;
 import pageobjects.desktop.TweetPage;
 import utilities.TestFrameworkException;
@@ -18,11 +19,12 @@ public class MaximumAttentionTweet extends BaseTest {
       new SearchPage(driver).searchTweet("@stepin_forum");
     }
     
-    @Test
-    public void test002_selectTweet() throws TestFrameworkException{
-    	//open tweet with maximum attention
+    @Test   
+    public void test002_selectTweet() throws Exception{
+        //open tweet with maximum attention
+        new ProfilePage(driver).clickTweet();
     }
-    
+
     @Test
     public void test003_getInformationOfTweet() throws TestFrameworkException{
     	HashMap<String, String> hMapInfoLiked = new HashMap<>();
