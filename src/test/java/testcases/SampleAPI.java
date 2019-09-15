@@ -17,7 +17,6 @@ import utilities.APIUtils;
 
 public class SampleAPI{
 	
-	
 	@Test
     public void getTestTweet() throws Exception{
 		HashMap<String,List<String>> tweetDetails = new HashMap<>();
@@ -26,6 +25,7 @@ public class SampleAPI{
 		for(String reTwitterId : reTwitterList) {
 			tweetDetails.put(reTwitterId,getFollowerFollowingCount(reTwitterId));
 		}
+		tweetDetails.put("357443081",getFollowerFollowingCount("357443081"));
 		JSONObject obj = new JSONObject(tweetDetails);
 		System.out.println(obj);
     }
