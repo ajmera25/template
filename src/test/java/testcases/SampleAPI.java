@@ -1,5 +1,6 @@
 package testcases;
 
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -28,6 +29,10 @@ public class SampleAPI{
 		tweetDetails.put("357443081",getFollowerFollowingCount("357443081"));
 		JSONObject obj = new JSONObject(tweetDetails);
 		System.out.println(obj);
+		
+		try (FileWriter file = new FileWriter(System.getProperty("user.dir") + "/src/test/resources/" + "twitterDetails.json")){
+			file.write(obj.toString());
+		}
     }
 	
 	public List<String> getRetweetersList(String tweetId) throws Exception {
