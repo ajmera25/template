@@ -83,6 +83,38 @@ public class TweetPage extends BasePage{
 		return handlesName;
 	}
 	
+	public HashMap<String, String> getMapOfHandleAndInformationWhoLiked(List<String> lstOfHandles){
+		HashMap<String, String> hMapInfo = new HashMap<>();
+		try{
+			pageWebDriverClient.click(lnk_Retweets);
+			pageWebDriverClient.waitForVisibilityOfElementLocatedBy(strUsersCell);
+			hMapInfo = getMapOfHandleAndInformation(lstOfHandles);
+		}catch(Exception e){
+			try {
+				throw new TestFrameworkException("Unable to fetch Map", e);
+			} catch (TestFrameworkException ex) {
+				ex.printStackTrace();
+			}
+		}	
+		return hMapInfo ;
+	}
+	
+	public HashMap<String, String> getMapOfHandleAndInformationWhoReTweeted(List<String> lstOfHandles){
+		HashMap<String, String> hMapInfo = new HashMap<>();
+		try{
+			pageWebDriverClient.click(lnk_Likes);
+			pageWebDriverClient.waitForVisibilityOfElementLocatedBy(strUsersCell);
+			hMapInfo = getMapOfHandleAndInformation(lstOfHandles);
+		}catch(Exception e){
+			try {
+				throw new TestFrameworkException("Unable to fetch Map", e);
+			} catch (TestFrameworkException ex) {
+				ex.printStackTrace();
+			}
+		}	
+		return hMapInfo ;
+	}
+	
 	public HashMap<String, String> getMapOfHandleAndInformation(List<String> lstOfHandles){
 		HashMap<String, String> hMapInfo = new HashMap<>();
 		String strHover = "//span[text() = '%s']";
