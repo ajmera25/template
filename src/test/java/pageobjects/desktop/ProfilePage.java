@@ -24,8 +24,8 @@ public class ProfilePage extends BasePage{
 		try {
 			List<WebElement> elementList = pageWebDriverClient.findElements(forumTweets);
 			for(WebElement element : elementList) {
-				String tweetCount = pageWebDriverClient.getText(element.findElement(By.xpath(retweetCountXpath)));
-				String likeCount = pageWebDriverClient.getText(element.findElement(By.xpath(likeCountXpath)));
+				String tweetCount = pageWebDriverClient.getText(pageWebDriverClient.findElement(element.findElement(By.xpath(retweetCountXpath))));
+				String likeCount = pageWebDriverClient.getText(pageWebDriverClient.findElement(element.findElement(By.xpath(likeCountXpath))));
 				int totalCount = Integer.parseInt(tweetCount) + Integer.parseInt(likeCount);
 				if(maxCount < totalCount) {
 					maxCount = totalCount;
