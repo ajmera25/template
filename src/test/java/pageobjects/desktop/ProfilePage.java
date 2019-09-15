@@ -22,6 +22,7 @@ public class ProfilePage extends BasePage{
 		String retweetCountXpath = "//div[contains(@class,'ProfileTweet-action--retweet')]/button[@aria-describedby]/span/span";
 		String likeCountXpath = "//div[contains(@class,'ProfileTweet-action--favorite')]/button[@aria-describedby]/span/span";
 		try {
+			pageWebDriverClient.scrollWindowVerticallyToClickableElement("//small[@class='time']/a[contains(@title,'Jul')]");
 			List<WebElement> elementList = pageWebDriverClient.findElements(forumTweets);
 			for(WebElement element : elementList) {
 				String tweetCount = pageWebDriverClient.getText(pageWebDriverClient.findElement(element.findElement(By.xpath(retweetCountXpath))));
