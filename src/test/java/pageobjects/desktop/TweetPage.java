@@ -30,10 +30,9 @@ public class TweetPage extends BasePage{
 	
 	@FindBy(xpath="//a[contains(@href, 'follower')]/span/span")
 	WebElement lbl_FollowerCount;
-	
+		
 	String strBioText = "(//span[text() = '%s']/ancestor::div[@data-testid = 'UserCell']//div/span)[last()]";
-			
-	
+		
 	public List<String> getListOfHandleOfUsersWhoLiked(){
 		List<String> handlesName = new ArrayList<String>();
 		try{
