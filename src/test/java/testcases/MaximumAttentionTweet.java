@@ -13,19 +13,20 @@ import utilities.TestFrameworkException;
 
 public class MaximumAttentionTweet extends BaseTest {
 
-    @Test
+    //@Test
     public void test001_getTestTweet() throws TestFrameworkException{
-      new LoginPage(driver).doLogin("SurnameTooLong", "bharatdemo");
+      new LoginPage(driver).doLogin("sachin.k1586@gmail.com", "BeginNew@2019");
       new SearchPage(driver).searchTweet("@stepin_forum");
     }
     
-    @Test   
+    //@Test(dependsOnMethods = "test001_getTestTweet")
+    @Test
     public void test002_selectTweet() throws Exception{
         //open tweet with maximum attention
         new ProfilePage(driver).clickTweet();
     }
 
-    @Test
+    @Test(dependsOnMethods = "test002_selectTweet")
     public void test003_getInformationOfTweet() throws TestFrameworkException{
     	HashMap<String, String> hMapInfoLiked = new HashMap<>();
     	HashMap<String, String> hMapInfoReTweeted = new HashMap<>();

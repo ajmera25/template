@@ -287,7 +287,7 @@ public class WebDriverClient {
 	 * @throws Exception
 	 */
 	
-	public WebElement scrollWindowVerticallyToClickableElement(String element_xpath) throws Exception {
+	/*public WebElement scrollWindowVerticallyToClickableElement(String element_xpath) throws Exception {
 		try{
 			WebElement ele = findElement(element_xpath);
 			return scrollWindowVerticallyToClickableElement(ele);
@@ -296,8 +296,29 @@ public class WebDriverClient {
 			throw new TestFrameworkException("failed to scroll vertically to clickable element "+ element_xpath,ex);
 		}
 
+	}*/
+	
+	public void scrollWindowVerticallyToClickableElement(String element_xpath) throws Exception {
+		JavascriptExecutor jse = (JavascriptExecutor)myDriver;
+		int count = 1;
+		
+		try {
+				String javascript = "window.scrollTo(0,";
+				jse.executeScript(javascript + "0)");
+	
+				while(findElements(element_xpath).size() <= 0 && count < 20) {
+					jse.executeScript(javascript + (1000*count) + ")");
+					System.out.println(count);
+					count++;
+				}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			Reporter.log("scrollVerticallyToClickableElement not able to execute, count:" + count, true);
+		}
 	}
 
+	
 	
 	/**
 	 * Check to see if element is location is greater than window size

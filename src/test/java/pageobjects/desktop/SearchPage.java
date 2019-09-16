@@ -22,6 +22,7 @@ public class SearchPage extends BasePage{
 	
 	public void searchTweet(String strTweet) throws TestFrameworkException{
 		try{
+			pageWebDriverClient.waitForElementToBeClickable(txt_SearchTweet);
 			pageWebDriverClient.clearTextAndType(txt_SearchTweet, strTweet);
 			if(strTweet.startsWith("@")){ //to search handle
 				if(pageWebDriverClient.isWebElementDisplayed(strHandleLink.replace("%s", strTweet))){
