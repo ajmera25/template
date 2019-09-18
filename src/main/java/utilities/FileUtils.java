@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class fileUtils {
+public class FileUtils {
 
 	private String MOVIE_TEST_DATA = "/testData/movies.txt";
 	
@@ -12,12 +12,11 @@ public class fileUtils {
 		BufferedReader br = null;
 		try {
 			br = new BufferedReader(new FileReader("src/test/resources/" + MOVIE_TEST_DATA));
-			String line ="";
-			while ((line = br.readLine()) != null) {
+			//String line ="";
+			while ((br.readLine()) != null) {
 				
-				}
+			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 			br.close();

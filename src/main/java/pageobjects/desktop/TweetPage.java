@@ -3,12 +3,14 @@ package pageobjects.desktop;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import core.BasePage;
-import utilities.TestFrameworkException;
 
 public class TweetPage extends BasePage{
 
@@ -31,7 +33,6 @@ public class TweetPage extends BasePage{
 	@FindBy(xpath="//a[contains(@href, 'follower')]/span/span")
 	WebElement lbl_FollowerCount;
 		
-	String strBioText = "(//span[text() = '%s']/ancestor::div[@data-testid = 'UserCell']//div/span)[last()]";
 		
 	public List<String> getListOfHandleOfUsersWhoLiked(){
 		List<String> handlesName = new ArrayList<String>();
@@ -39,13 +40,9 @@ public class TweetPage extends BasePage{
 			pageWebDriverClient.click(lnk_Likes);
 			pageWebDriverClient.waitForVisibilityOfElementLocatedBy(strUsersCell);
 			handlesName = getListOfHandleOfUsers();
-		}catch(Exception e){
-			try {
-				throw new TestFrameworkException("Unable to fetch list", e);
-			} catch (TestFrameworkException ex) {
-				ex.printStackTrace();
-			}
-		}	
+		}catch(Exception ex){
+			ex.printStackTrace();
+	}	
 		return handlesName ;
 	}
 	
@@ -55,12 +52,8 @@ public class TweetPage extends BasePage{
 			pageWebDriverClient.click(lnk_Retweets);
 			pageWebDriverClient.waitForVisibilityOfElementLocatedBy(strUsersCell);
 			handlesName = getListOfHandleOfUsers();
-		}catch(Exception e){
-			try {
-				throw new TestFrameworkException("Unable to fetch list", e);
-			} catch (TestFrameworkException ex) {
+		}catch(Exception ex){
 				ex.printStackTrace();
-			}
 		}	
 		return handlesName ;
 	}
@@ -73,70 +66,63 @@ public class TweetPage extends BasePage{
 			for(WebElement handle: handlesInfo){
 				handlesName.add(handle.getText());
 			}
-		}catch(Exception e){
-			try {
-				throw new TestFrameworkException("Unable to fetch list", e);
-			} catch (TestFrameworkException ex) {
-				ex.printStackTrace();
-			}
-		}	
+		}catch(Exception ex){
+			ex.printStackTrace();
+	}	
 		return handlesName;
 	}
 	
-	public HashMap<String, String> getMapOfHandleAndInformationWhoLiked(List<String> lstOfHandles){
-		HashMap<String, String> hMapInfo = new HashMap<>();
+	public HashMap<String, List<String>> getMapOfHandleAndInformationWhoLiked(List<String> lstOfHandles){
+		HashMap<String, List<String>> hMapInfo = new HashMap<>();
 		try{
-			pageWebDriverClient.click(lnk_Retweets);
+			//pageWebDriverClient.click(lnk_Likes);
 			pageWebDriverClient.waitForVisibilityOfElementLocatedBy(strUsersCell);
 			hMapInfo = getMapOfHandleAndInformation(lstOfHandles);
-		}catch(Exception e){
-			try {
-				throw new TestFrameworkException("Unable to fetch Map", e);
-			} catch (TestFrameworkException ex) {
-				ex.printStackTrace();
-			}
-		}	
+		}catch(Exception ex){
+			ex.printStackTrace();
+	}	
 		return hMapInfo ;
 	}
 	
-	public HashMap<String, String> getMapOfHandleAndInformationWhoReTweeted(List<String> lstOfHandles){
-		HashMap<String, String> hMapInfo = new HashMap<>();
+	public HashMap<String, List<String>> getMapOfHandleAndInformationWhoReTweeted(List<String> lstOfHandles){
+		HashMap<String, List<String>> hMapInfo = new HashMap<>();
 		try{
-			pageWebDriverClient.click(lnk_Likes);
+			//pageWebDriverClient.click(lnk_Retweets);
 			pageWebDriverClient.waitForVisibilityOfElementLocatedBy(strUsersCell);
 			hMapInfo = getMapOfHandleAndInformation(lstOfHandles);
-		}catch(Exception e){
-			try {
-				throw new TestFrameworkException("Unable to fetch Map", e);
-			} catch (TestFrameworkException ex) {
-				ex.printStackTrace();
-			}
-		}	
+		}catch(Exception ex){
+			ex.printStackTrace();
+	}	
 		return hMapInfo ;
 	}
 	
-	public HashMap<String, String> getMapOfHandleAndInformation(List<String> lstOfHandles){
-		HashMap<String, String> hMapInfo = new HashMap<>();
+	public HashMap<String, List<String>> getMapOfHandleAndInformation(List<String> lstOfHandles){
+		HashMap<String, List<String>> hMapInfo = new HashMap<>();
 		String strHover = "//span[text() = '%s']";
-		String strOverAllInfo, strFollowingCount, strFollowerCount, strBio;
+		String strBioText = "//span[text()='%s']/ancestor::a/parent::div/following-sibling::div/div[@dir='auto']/span[text()]";
+		String bioText = "";
 		try{
+			//key - value map where key is handleName and value is "followingCount, followerCount, BioText"
 			for(String handle: lstOfHandles){
 				pageWebDriverClient.hover(strHover.replace("%s", handle));
 				pageWebDriverClient.waitForVisibilityOfElementLocatedBy(strFollowLink);
-				strFollowingCount = pageWebDriverClient.getText(lbl_FollowingCount);
-				strFollowerCount = pageWebDriverClient.getText(lbl_FollowerCount);
-				strBio = pageWebDriverClient.getText(strBioText.replace("%s", handle));
-				strOverAllInfo = strFollowingCount + ", " + strFollowerCount + ", " + strBio;
-				hMapInfo.put(handle, strOverAllInfo);
-			}			
-			//key - value map where key is handleName and value is "followingCount, followerCount, BioText"
-		}catch(Exception e){
-			try {
-				throw new TestFrameworkException("Unable to fetch list", e);
-			} catch (TestFrameworkException ex) {
-				ex.printStackTrace();
+				List<String> handleInfo = new ArrayList<>();
+				handleInfo.add(pageWebDriverClient.getText(lbl_FollowingCount));
+				handleInfo.add(pageWebDriverClient.getText(lbl_FollowerCount));
+				if(pageWebDriverClient.findElements(strBioText.replace("%s", handle)).size() > 0) {
+					bioText = pageWebDriverClient.getText(strBioText.replace("%s", handle));
+				}else {
+					bioText = "";
+				}
+				handleInfo.add(bioText);
+				handleInfo.add(((TakesScreenshot) driver).getScreenshotAs(OutputType.BASE64));
+				hMapInfo.put(handle, handleInfo);
 			}
-		}	
+			pageWebDriverClient.click("//div[@aria-label='Close']");
+			
+		}catch(Exception ex){
+			ex.printStackTrace();
+	}	
 		return hMapInfo;
 	}
 	

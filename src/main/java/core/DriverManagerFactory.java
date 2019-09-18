@@ -11,11 +11,13 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 
 import io.appium.java_client.AppiumDriver;
 
+@SuppressWarnings("rawtypes")
 public class DriverManagerFactory {
 
+	
 	private static ThreadLocal<AppiumDriver> threadAppiumDriver = new ThreadLocal<AppiumDriver>();
 	private static ThreadLocal<RemoteWebDriver> threadDesktopWebDriver = new ThreadLocal<RemoteWebDriver>();
-//	String hub = System.getProperty("hub");
+	//String hub = System.getProperty("hub");
 	String hub = " http://localhost:4444/wd/hub";
 
 	public AppiumDriver getAppiumDriver() {
@@ -54,9 +56,9 @@ public class DriverManagerFactory {
 	}
 	
 	public void initializeChromeWebDriver()  {
-		 DesiredCapabilities capabilities = new DesiredCapabilities();
-		 ChromeOptions options = new ChromeOptions();
-	     capabilities.setCapability("platformName", "WINDOWS");
+		DesiredCapabilities capabilities = new DesiredCapabilities();
+		ChromeOptions options = new ChromeOptions();
+	    capabilities.setCapability("platformName", "WINDOWS");
 		options.addArguments("start-maximized");
 		options.addArguments("--disable-infobars");
 		options.addArguments("--dns-prefetch-disable");
@@ -71,12 +73,12 @@ public class DriverManagerFactory {
 	public void initializeMobileDriver() {
 		DesiredCapabilities capabilities = new DesiredCapabilities();
 		capabilities.setCapability(CapabilityType.BROWSER_NAME, "chrome");
-	       capabilities.setCapability("deviceName", "9243934");
-	       // capabilities.setCapability("deviceName", "192.168.0.27:5000");
-	        capabilities.setCapability("platformVersion", "9");
-	        capabilities.setCapability("platformName", "Android");
-	        /*capabilities.setCapability("appPackage", "com.google.android.youtube");
-	        capabilities.setCapability("appActivity", "com.google.android.apps.youtube.app.WatchWhileActivity");*/
+		capabilities.setCapability("deviceName", "9243934");
+		//capabilities.setCapability("deviceName", "192.168.0.27:5000");
+        capabilities.setCapability("platformVersion", "9");
+        capabilities.setCapability("platformName", "Android");
+        //capabilities.setCapability("appPackage", "com.google.android.youtube");
+        //capabilities.setCapability("appActivity", "com.google.android.apps.youtube.app.WatchWhileActivity");
 		try {
 			setAppiumDriver(new AppiumDriver(new URL(hub), capabilities));
 		} catch (MalformedURLException e) {
@@ -93,4 +95,5 @@ public class DriverManagerFactory {
 		}
 		
 	}
-	}
+	
+}

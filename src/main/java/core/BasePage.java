@@ -1,4 +1,4 @@
-	package core;
+package core;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
@@ -10,6 +10,7 @@ import utilities.WebDriverClient;
 public class BasePage {
 	public WebDriverClient pageWebDriverClient = null;
 	DriverManagerFactory driverManagerFactory = null;
+	@SuppressWarnings("rawtypes")
 	protected AppiumDriver appiumDriver = null;
 	protected WebDriver driver = null;
 	public String currentURL = "";
@@ -21,6 +22,7 @@ public class BasePage {
     }
 	
 	//So that we can utilize appium driver method
+	@SuppressWarnings("rawtypes")
 	public BasePage(AppiumDriver appiumDriver) {
 		//BasePage constructor for appium driver
         this.appiumDriver = appiumDriver;

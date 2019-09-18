@@ -1,7 +1,6 @@
 package core;
 
 import org.testng.annotations.Factory;
-import testcases.MaximumAttentionTweet;
 
 public class TestFactory {
 	

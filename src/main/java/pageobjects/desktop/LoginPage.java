@@ -5,7 +5,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import core.BasePage;
-import utilities.TestFrameworkException;
 
 public class LoginPage extends BasePage{
 
@@ -16,29 +15,26 @@ public class LoginPage extends BasePage{
 	@FindBy(id="signin-link")
 	WebElement loginLink;
 	
-	@FindBy(xpath="//input[contains(@name, 'username_or_email')]")
+	@FindBy(xpath="//input[@class='js-username-field email-input js-initial-focus']")
 	WebElement txt_Username;
 	
-	@FindBy(xpath="//input[contains(@name, 'password')]")
+	@FindBy(xpath="//input[@class='js-password-field']")
 	WebElement txt_Password;
 	
-	@FindBy(xpath="//input[@value='Log in']")
+	@FindBy(xpath="//button[text()='Log in']")
 	WebElement btn_Login;
 	
-	public boolean doLogin(String username, String password)   {
+	public boolean doLogin(String username, String password) throws Exception   {
+		boolean bval = false;
 		try{
-			pageWebDriverClient.click(loginLink);
+			pageWebDriverClient.waitForVisibilityOfElement(txt_Username);
 			pageWebDriverClient.clearTextAndType(txt_Username, username);
 			pageWebDriverClient.clearTextAndType(txt_Password, password);
-			return pageWebDriverClient.click(btn_Login);
-		}catch(Exception e){
-			try {
-				throw new TestFrameworkException("Unable to Login Successfully", e);
-			} catch (TestFrameworkException ex) {
-				ex.printStackTrace();
-			}
-			return false;
+			bval = pageWebDriverClient.click(btn_Login);
+		}catch(Exception ex){
+			ex.printStackTrace();
 		}
+		return bval;
 	}
 
 }

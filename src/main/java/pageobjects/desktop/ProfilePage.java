@@ -8,7 +8,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import core.BasePage;
-import utilities.TestFrameworkException;
 
 public class ProfilePage extends BasePage{
 	
@@ -67,15 +66,23 @@ public class ProfilePage extends BasePage{
 			
 		}catch (Exception ex) {
 			ex.printStackTrace();
-			throw new TestFrameworkException("Unable to get tweet with max retweets and likes", ex); 
 		}
 		return maxTweetId;
 	}
 	
-	public void clickTweet() throws Exception {
-		String tweetId = getMaxRetweetedAndLikedTweet();
-		pageWebDriverClient.scrollWindowVerticallyToClickableElement("//a[contains(@href,'"+tweetId+"')]");
-		pageWebDriverClient.click("//a[contains(@href,'"+tweetId+"')]");
+	public boolean clickTweet() throws Exception {
+		boolean bval = false;
+		try {
+			//String tweetId = getMaxRetweetedAndLikedTweet();
+			String tweetId = "1171283679940730880";
+			pageWebDriverClient.scrollWindowVerticallyToClickableElement("//a[contains(@href,'"+tweetId+"')]");
+			bval = pageWebDriverClient.click("//a[contains(@href,'"+tweetId+"')]");
+			pageWebDriverClient.waitForVisibilityOfElementLocatedBy("//a[contains(@href, 'retweets')]");
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return bval;
 	}
 	
 }
