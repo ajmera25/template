@@ -73,8 +73,8 @@ public class ProfilePage extends BasePage{
 	public boolean clickTweet() throws Exception {
 		boolean bval = false;
 		try {
-			//String tweetId = getMaxRetweetedAndLikedTweet();
-			String tweetId = "1171283679940730880";
+			String tweetId = getMaxRetweetedAndLikedTweet();
+			//String tweetId = "1171283679940730880";
 			pageWebDriverClient.scrollWindowVerticallyToClickableElement("//a[contains(@href,'"+tweetId+"')]");
 			bval = pageWebDriverClient.click("//a[contains(@href,'"+tweetId+"')]");
 			pageWebDriverClient.waitForVisibilityOfElementLocatedBy("//a[contains(@href, 'retweets')]");

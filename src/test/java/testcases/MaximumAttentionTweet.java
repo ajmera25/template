@@ -21,11 +21,10 @@ public class MaximumAttentionTweet extends BaseTest {
 
     @Test
     public void test001_getTestTweet() throws Exception{
-      Assert.assertTrue(new LoginPage(driver).doLogin("sachin.k1586@gmail.com", "BeginNew@2019"), "Login failed !!");
+      Assert.assertTrue(new LoginPage(driver).doLogin("", ""), "Login failed !!");
       Assert.assertTrue(new SearchPage(driver).searchTweet("@stepin_forum"), "Failed to search");
     }
     
-    //@Test
     @Test(dependsOnMethods = "test001_getTestTweet")
     public void test002_selectTweetWithMaxTweetsAndLikes() throws Exception{
     	Assert.assertTrue(new ProfilePage(driver).clickTweet(), "Failed to click on tweet with max retweets and likes.");
