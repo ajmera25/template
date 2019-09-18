@@ -59,7 +59,7 @@ public class ProfilePage extends BasePage{
 					
 				}
 				
-				jse.executeScript(javascript + (2000*count) + ")");
+				jse.executeScript(javascript + (1000*count) + ")");
 				System.out.println(count);
 				count++;
 			}

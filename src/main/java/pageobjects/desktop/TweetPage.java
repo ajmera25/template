@@ -117,6 +117,8 @@ public class TweetPage extends BasePage{
 				handleInfo.add(bioText);
 				handleInfo.add(((TakesScreenshot) driver).getScreenshotAs(OutputType.BASE64));
 				hMapInfo.put(handle, handleInfo);
+				//To remove hover
+				pageWebDriverClient.click("//div[@aria-label='Close']/parent::div/following-sibling::div");
 			}
 			pageWebDriverClient.click("//div[@aria-label='Close']");
 			
