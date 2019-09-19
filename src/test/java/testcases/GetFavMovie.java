@@ -28,9 +28,14 @@ public class GetFavMovie{
 	
 	@Test
 	public void favMovies() throws Exception {
-		Constructor<?> constructor;
 		String platform = System.getProperty("platform");
 		dmf.initializeDriver(platform);
+		moviefromYoutube(platform);
+		detailsFromImdb(platform);
+	}
+	
+	public void moviefromYoutube(String platform) throws Exception {
+		Constructor<?> constructor;
 		Class<?> clazz = Class.forName("pageobjects" + "." + platform  + "." + "YoutubeHomePage");
 		if(platform.equalsIgnoreCase("Desktop")) {
 			constructor = clazz.getConstructor(WebDriver.class);
@@ -50,25 +55,29 @@ public class GetFavMovie{
 		
 		Method getMovieList = clazz.getDeclaredMethod("getMoviesList");
 		getMovieList.invoke(c).toString();
+	}
+	
+	public void detailsFromImdb(String platform) throws Exception {
+		Constructor<?> constructor;
+		Class<?> imdbClass = Class.forName("pageobjects" + "." + platform  + "." + "IMDBSearchPage");
+		if(platform.equalsIgnoreCase("Desktop")) {
+			constructor = imdbClass.getConstructor(WebDriver.class);
+		}else {
+			constructor = imdbClass.getConstructor(AppiumDriver.class);
+		}
 		
-		 Class<?> imdbClass = Class.forName("pageobjects" + "." + platform  + "." + "IMDBSearchPage");
-			if(platform.equalsIgnoreCase("Desktop")) {
-				constructor = imdbClass.getConstructor(WebDriver.class);
-			}else {
-				constructor = imdbClass.getConstructor(AppiumDriver.class);
-			}
-			
-			Object imdbObject = constructor.newInstance(dmf.getDriver(platform));
-			//String parameter
-			Class[] imdbparam = new Class[1];	
-			paramString[0] = HashMap.class;
-			
-			Method setImdbUrl = clazz.getDeclaredMethod("setUrl");
-			setImdbUrl.invoke(c,"http://www.imdb.com");
-			
-			Method setImdbMovieSearch = clazz.getDeclaredMethod("searchMovieNameandGetImdbDirectorAndRating");
-			setImdbMovieSearch.invoke(c);
-			dmf.closeAllDriver();
+		Object imdbObject = constructor.newInstance(dmf.getDriver(platform));
+		//String parameter
+		Class[] imdbparam = new Class[1];	
+		imdbparam[0] = String.class;
+		
+		Method setImdbUrl = imdbClass.getDeclaredMethod("setUrl", imdbparam);
+		setImdbUrl.invoke(imdbObject,"http://www.imdb.com");
+		
+		Method setImdbMovieSearch = imdbClass.getDeclaredMethod("searchMovieNameandGetImdbDirectorAndRating");
+		setImdbMovieSearch.invoke(imdbObject);
+		dmf.closeAllDriver();
+		
 	}
 	
 	/*@AfterSuite
