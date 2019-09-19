@@ -2,18 +2,18 @@ package testcases;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
+import java.util.HashMap;
 
 import org.openqa.selenium.WebDriver;
-import org.testng.Reporter;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
 import core.DriverManagerFactory;
 import io.appium.java_client.AppiumDriver;
+import model.MovieDetails;
 
 public class GetFavMovie{
-	
+
+	public static HashMap<String,MovieDetails> moviesMap = new HashMap<>();
 	DriverManagerFactory dmf = new DriverManagerFactory ();
 	/*@BeforeSuite
 	public void beforeSuite() {
@@ -51,7 +51,24 @@ public class GetFavMovie{
 		Method getMovieList = clazz.getDeclaredMethod("getMoviesList");
 		getMovieList.invoke(c).toString();
 		
-		dmf.closeAllDriver();
+		 Class<?> imdbClass = Class.forName("pageobjects" + "." + platform  + "." + "IMDBSearchPage");
+			if(platform.equalsIgnoreCase("Desktop")) {
+				constructor = imdbClass.getConstructor(WebDriver.class);
+			}else {
+				constructor = imdbClass.getConstructor(AppiumDriver.class);
+			}
+			
+			Object imdbObject = constructor.newInstance(dmf.getDriver(platform));
+			//String parameter
+			Class[] imdbparam = new Class[1];	
+			paramString[0] = HashMap.class;
+			
+			Method setImdbUrl = clazz.getDeclaredMethod("setUrl");
+			setImdbUrl.invoke(c,"http://www.imdb.com");
+			
+			Method setImdbMovieSearch = clazz.getDeclaredMethod("searchMovieNameandGetImdbDirectorAndRating");
+			setImdbMovieSearch.invoke(c);
+			dmf.closeAllDriver();
 	}
 	
 	/*@AfterSuite

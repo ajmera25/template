@@ -1,10 +1,15 @@
 package pageobjects.desktop;
 
+import java.util.HashMap;
+import java.util.List;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import core.BasePage;
+import model.MovieDetails;
+import testcases.GetFavMovie;
 
 public class IMDBSearchPage extends BasePage{
 
@@ -26,22 +31,27 @@ public class IMDBSearchPage extends BasePage{
 		return bval;
 	}
 	
-	public boolean searchMovieName(String movieName) throws Exception{
+	public boolean searchMovieNameandGetImdbDirectorAndRating() throws Exception{
 		boolean bval = false;
+		MovieDetails movieDetail = new MovieDetails();
 		try{
-			pageWebDriverClient.setText(searchMovieName,movieName);
-			pageWebDriverClient.click("//div[@class='suggestionlabel']/span[@title='"+movieName+"']");
-		}catch(Exception e){
+			for(String movieName : GetFavMovie.moviesMap.keySet()) {
+				pageWebDriverClient.setText(searchMovieName,movieName);
+				pageWebDriverClient.click("//div[@class='suggestionlabel']/span[@title='"+movieName+"']");
+				movieDetail.setImdbRating(pageWebDriverClient.getText("//div[@class='imdbRating']//span"));
+				movieDetail.setImdbDirectorName(pageWebDriverClient.getText(".//h4[text()='Director:']/following-sibling::a"));
+				 GetFavMovie.moviesMap.put(movieName, movieDetail);
+		}}catch(Exception e){
 			e.printStackTrace();
 		}
 		return bval;
 	}
 	
-	public boolean getImdbRating(String movieName) throws Exception{
+	/*public boolean getImdbRating(String movieName) throws Exception{
 		boolean bval = false;
 		try{
 			pageWebDriverClient.setText(searchMovieName,movieName);
-			pageWebDriverClient.getText("//div[@class='imdbRating']//span");
+			
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -52,10 +62,9 @@ public class IMDBSearchPage extends BasePage{
 		boolean bval = false;
 		try{
 			pageWebDriverClient.setText(searchMovieName,movieName);
-			pageWebDriverClient.getText(".//h4[text()='Director:']/following-sibling::a");
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 		return bval;
-	}
+	}*/
 }

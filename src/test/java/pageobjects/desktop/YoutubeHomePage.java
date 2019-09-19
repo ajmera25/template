@@ -5,6 +5,8 @@ import java.util.HashMap;
 import org.openqa.selenium.WebDriver;
 
 import core.BasePage;
+import model.MovieDetails;
+import testcases.GetFavMovie;
 
 public class YoutubeHomePage extends BasePage{
 
@@ -42,6 +44,7 @@ public class YoutubeHomePage extends BasePage{
 		String movieTitle = "";
 		String moviePrice = "";
 		String movie = "//ytd-grid-movie-renderer";
+		MovieDetails movieDetails = new MovieDetails();
 		try{
 			
 			for (int i=1; i<=20; i++) {
@@ -53,6 +56,8 @@ public class YoutubeHomePage extends BasePage{
 					System.out.println("movieTitle >> " + movieTitle);
 					System.out.println("moviePrice >> " + moviePrice);
 					moviesList.put(movieTitle, moviePrice);
+					movieDetails.setMovieName(moviePrice);
+					GetFavMovie.moviesMap.put(movieTitle,movieDetails);
 				}
 				
 				
