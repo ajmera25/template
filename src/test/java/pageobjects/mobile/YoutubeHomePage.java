@@ -3,6 +3,8 @@ package pageobjects.mobile;
 import java.util.HashMap;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 import core.BasePage;
 
@@ -11,6 +13,33 @@ public class YoutubeHomePage extends BasePage{
 	public YoutubeHomePage(WebDriver driver) {
 		super(driver);
 	}
+
+	@FindBy(xpath = "//android.widget.Button[@content-desc='Trending']/android.widget.TextView")
+	WebElement mlnk_Trending;
+	
+	@FindBy(xpath = "//android.widget.ImageView[@content-desc='Movies']")
+	WebElement mlnk_Movies;
+	
+	@FindBy(id = "com.google.android.youtube:id/action_button")
+	WebElement mlnk_GetMovies;
+	
+	@FindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout"
+			+ "/android.widget.FrameLayout/android.widget.LinearLayout"
+			+ "/android.widget.FrameLayout/android.widget.FrameLayout"
+			+ "/android.view.ViewGroup/android.widget.FrameLayout[2]"
+			+ "/android.view.ViewGroup/android.view.ViewGroup"
+			+ "/android.widget.FrameLayout[2]/android.widget.FrameLayout"
+			+ "/androidx.viewpager.widget.ViewPager/android.view.ViewGroup"
+			+ "/android.support.v7.widget.RecyclerView/android.widget."
+			+ "LinearLayout[2]/android.widget.RelativeLayout/android.widget.TextView")
+	WebElement mlnk_ViewAll;
+	
+	String str_MoviesList = "com.google.android.youtube:id/title";
+	
+	@FindBy(id = "'com.google.android.youtube:id/title']")
+	WebElement mlnk_ListOfMovies;
+	
+	
 	
 	public void setUrl(String url) throws Exception{
 		try{
@@ -23,14 +52,17 @@ public class YoutubeHomePage extends BasePage{
 	public boolean clickMovies() throws Exception{
 		boolean bval = false;
 		try{
-			String moviesLink = "//span[text()='Movies']";
+			mlnk_Trending.click();
+			mlnk_Movies.click();
+			
+/*			String moviesLink = "//span[text()='Movies']";
 			String viewAllLink = "//paper-button[@aria-label='View all']";
 			pageWebDriverClient.waitForElementToBeClickable(moviesLink);
 			pageWebDriverClient.click(moviesLink);
 			pageWebDriverClient.waitForElementToBeClickable(viewAllLink);
 			pageWebDriverClient.click(viewAllLink);
 			bval = pageWebDriverClient.waitForVisibilityThenCheckIsWebElementDisplayed("//span[text()='New Releases']");
-		}catch(Exception e){
+*/		}catch(Exception e){
 			e.printStackTrace();
 		}
 		return bval;
