@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -30,7 +29,7 @@ public class YoutubeHomePage extends BasePage{
 	@FindBy(xpath="//android.widget.TextView[contains(@resource-id,'card_list_button') and @text='VIEW ALL']")
 	WebElement mlnk_ViewAll;
 	
-	String str_MoviesList = "com.google.android.youtube:id/title";
+	String str_MoviesList = "//android.widget.GridLayout[contains(@resource-id,'compact_movie_item')']";
 	
 	@FindBy(id = "'com.google.android.youtube:id/title']")
 	WebElement mlnk_ListOfMovies;
@@ -63,10 +62,13 @@ public class YoutubeHomePage extends BasePage{
 		HashMap<String, String> moviesList = new HashMap<String, String>();
 		try{
 		@SuppressWarnings("unchecked")
-		List<MobileElement> mobElements = appiumDriver.findElements(By.xpath("com.google.android.youtube:id/title"));
+		List<MobileElement> mobElements = appiumDriver.findElements(By.xpath(str_MoviesList));
 		int i = 1;
+		String strName = null, strPrice = null;
 		for(MobileElement mobelement : mobElements){
-			moviesList.put(mobelement.getText(), "");
+			mobelement.findElement(By.xpath("//android.widget.TextView[contains(@resource-id,'title')")).getText();
+			mobelement.findElement(By.xpath("//android.widget.TextView[contains(@resource-id,'ypc_badge_text')]")).getText();
+			moviesList.put(strName, strPrice);
 			if(i == 20){
 				break;
 			}
