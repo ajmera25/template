@@ -14,7 +14,7 @@ public class YoutubeHomePage extends BasePage{
 	
 	public void setUrl(String url) throws Exception{
 		try{
-			pageWebDriverClient.setURL(url);
+			pageWebDriverClient.setURL("https://www.youtube.com");
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -28,8 +28,9 @@ public class YoutubeHomePage extends BasePage{
 			pageWebDriverClient.waitForElementToBeClickable(moviesLink);
 			pageWebDriverClient.click(moviesLink);
 			pageWebDriverClient.waitForElementToBeClickable(viewAllLink);
-			pageWebDriverClient.click(viewAllLink);
-			bval = pageWebDriverClient.waitForVisibilityThenCheckIsWebElementDisplayed("//span[text()='New Releases']");
+			pageWebDriverClient.setPageLoadTimeout(10);
+			bval = pageWebDriverClient.click(viewAllLink);
+			pageWebDriverClient.resetPageLoadTimeout();
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -38,18 +39,29 @@ public class YoutubeHomePage extends BasePage{
 	
 	public HashMap<String, String> getMoviesList () {
 		HashMap<String, String> moviesList = new HashMap<String, String>();
-		String movieTitle = "//span[@id='video-title']";
-		String movePrice = "//span[contains(text(),'From')]";
+		String movieTitle = "";
+		String moviePrice = "";
 		String movie = "//ytd-grid-movie-renderer";
 		try{
 			
 			for (int i=1; i<=20; i++) {
-				moviesList.put(pageWebDriverClient.getText(movie+"["+i+"]"+movieTitle),pageWebDriverClient.getText(movie+"["+i+"]"+movePrice));
+				movieTitle = pageWebDriverClient.getText(movie+"["+i+"]//span[@id='video-title']");
+				System.out.println("movieTitle get text >> " + movieTitle);
+				moviePrice = pageWebDriverClient.getText(movie+"["+i+"]//span[contains(text(),'From')]");
+				if(!movieTitle.isEmpty() && !moviePrice.isEmpty()) {
+					moviePrice = moviePrice.split("\\u20B9")[1];
+					System.out.println("movieTitle >> " + movieTitle);
+					System.out.println("moviePrice >> " + moviePrice);
+					moviesList.put(movieTitle, moviePrice);
+				}
+				
+				
 			}
 			
 		}catch(Exception e){
 			e.printStackTrace();
 		}
+		System.out.println(moviesList);
 		return moviesList;
 	}
 

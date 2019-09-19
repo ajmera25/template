@@ -6,14 +6,15 @@ import java.lang.reflect.Method;
 import org.openqa.selenium.WebDriver;
 import org.testng.Reporter;
 import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
 import core.DriverManagerFactory;
 import io.appium.java_client.AppiumDriver;
 
 public class GetFavMovie{
-	DriverManagerFactory dmf;
 	
+	DriverManagerFactory dmf = new DriverManagerFactory ();
 	/*@BeforeSuite
 	public void beforeSuite() {
 		dmf = new DriverManagerFactory();
@@ -27,7 +28,6 @@ public class GetFavMovie{
 	
 	@Test
 	public void favMovies() throws Exception {
-		DriverManagerFactory dmf = new DriverManagerFactory();
 		Constructor<?> constructor;
 		String platform = System.getProperty("platform");
 		dmf.initializeDriver(platform);
@@ -50,9 +50,11 @@ public class GetFavMovie{
 		
 		Method getMovieList = clazz.getDeclaredMethod("getMoviesList");
 		getMovieList.invoke(c).toString();
+		
+		dmf.closeAllDriver();
 	}
 	
-	@AfterSuite
+	/*@AfterSuite
 	public void afterSuite() throws Exception {
 	 	try{
 	 		if(dmf.getDesktopWebDriver()!=null)
@@ -64,5 +66,5 @@ public class GetFavMovie{
 			Reporter.log("Error in Initializing the test", true);
 			e.printStackTrace();
 		}
-	}
+	}*/
 }
