@@ -5,10 +5,12 @@ import org.openqa.selenium.support.PageFactory;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
+import utilities.MobileWebDriverClient;
 import utilities.WebDriverClient;
 
 public class BasePage {
 	public WebDriverClient pageWebDriverClient = null;
+	public MobileWebDriverClient mobileWebDriverClient = null;
 	DriverManagerFactory driverManagerFactory = null;
 	protected AppiumDriver appiumDriver = null;
 	protected WebDriver driver = null;
@@ -25,7 +27,7 @@ public class BasePage {
 		//BasePage constructor for appium driver
         this.appiumDriver = appiumDriver;
         PageFactory.initElements(new AppiumFieldDecorator(appiumDriver), this);
-        pageWebDriverClient = new WebDriverClient(appiumDriver);
+        mobileWebDriverClient = new MobileWebDriverClient(appiumDriver);
     }
 	
 }
