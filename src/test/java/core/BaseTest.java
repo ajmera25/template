@@ -8,15 +8,13 @@ import org.testng.annotations.BeforeSuite;
 public class BaseTest {
 	
 	public WebDriver driver;
-	
+	DriverManagerFactory DMF = new DriverManagerFactory();
 	@BeforeSuite
 	public void beforeSuite() {
 		DriverManagerFactory DMF = new DriverManagerFactory();
 		try {
-			DMF.initializeDriver("desktop");
-			driver = DMF.getDesktopWebDriver();
-			driver.get("https://youtube.com");
-			driver.manage().window().maximize();
+			String platform = System.getProperty("platform");
+			DMF.initializeDriver(platform);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -26,6 +26,17 @@ public class YoutubeHomePage extends BasePage{
 		return bval;
 	}
 	
+	public boolean setUrl(String url) throws Exception{
+		boolean bval = false;
+		try{
+			pageWebDriverClient.setURL(url);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return bval;
+	}
+	
+	
 	public boolean getMoviesList () {
 		boolean bval = false;
 		try{
