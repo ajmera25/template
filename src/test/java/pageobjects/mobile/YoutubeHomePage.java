@@ -1,13 +1,16 @@
 package pageobjects.mobile;
 
 import java.util.HashMap;
+import java.util.List;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import core.BasePage;
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.MobileElement;
 
 public class YoutubeHomePage extends BasePage{
 
@@ -50,14 +53,7 @@ public class YoutubeHomePage extends BasePage{
 			mlnk_Movies.click();
 			mlnk_GetMovies.click();
 			mlnk_ViewAll.click();
-/*			String moviesLink = "//span[text()='Movies']";
-			String viewAllLink = "//paper-button[@aria-label='View all']";
-			pageWebDriverClient.waitForElementToBeClickable(moviesLink);
-			pageWebDriverClient.click(moviesLink);
-			pageWebDriverClient.waitForElementToBeClickable(viewAllLink);
-			pageWebDriverClient.click(viewAllLink);
-			bval = pageWebDriverClient.waitForVisibilityThenCheckIsWebElementDisplayed("//span[text()='New Releases']");
-*/		}catch(Exception e){
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 		return bval;
@@ -65,15 +61,18 @@ public class YoutubeHomePage extends BasePage{
 	
 	public HashMap<String, String> getMoviesList () {
 		HashMap<String, String> moviesList = new HashMap<String, String>();
-		String movieTitle = "//span[@id='video-title']";
-		String movePrice = "//span[contains(text(),'From')]";
-		String movie = "//ytd-grid-movie-renderer";
 		try{
-			
-			for (int i=1; i<=20; i++) {
-				moviesList.put(pageWebDriverClient.getText(movie+"["+i+"]"+movieTitle),pageWebDriverClient.getText(movie+"["+i+"]"+movePrice));
+		@SuppressWarnings("unchecked")
+		List<MobileElement> mobElements = appiumDriver.findElements(By.xpath("com.google.android.youtube:id/title"));
+		int i = 1;
+		for(MobileElement mobelement : mobElements){
+			moviesList.put(mobelement.getText(), "");
+			if(i == 20){
+				break;
 			}
-			
+			i++;
+		}	
+		System.out.println(moviesList);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
