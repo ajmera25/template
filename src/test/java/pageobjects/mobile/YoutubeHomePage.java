@@ -10,6 +10,7 @@ import org.openqa.selenium.support.FindBy;
 import core.BasePage;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
+import io.appium.java_client.android.AndroidElement;
 
 public class YoutubeHomePage extends BasePage{
 
@@ -29,7 +30,7 @@ public class YoutubeHomePage extends BasePage{
 	@FindBy(xpath="//android.widget.TextView[contains(@resource-id,'card_list_button') and @text='VIEW ALL']")
 	WebElement mlnk_ViewAll;
 	
-	String str_MoviesList = "//android.widget.GridLayout[contains(@resource-id,'compact_movie_item')']";
+	String str_MoviesList = "//android.widget.GridLayout[contains(@resource-id,'compact_movie_item')]";
 	
 	@FindBy(id = "'com.google.android.youtube:id/title']")
 	WebElement mlnk_ListOfMovies;
@@ -47,7 +48,7 @@ public class YoutubeHomePage extends BasePage{
 	public boolean clickMovies() throws Exception{
 		boolean bval = false;
 		try{
-			Thread.sleep(5000);
+			Thread.sleep(15000);
 			mlnk_Trending.click();
 			mlnk_Movies.click();
 			mlnk_GetMovies.click();
@@ -61,13 +62,14 @@ public class YoutubeHomePage extends BasePage{
 	public HashMap<String, String> getMoviesList () {
 		HashMap<String, String> moviesList = new HashMap<String, String>();
 		try{
-		@SuppressWarnings("unchecked")
-		List<MobileElement> mobElements = appiumDriver.findElements(By.xpath(str_MoviesList));
+		List<MobileElement> mobElements = appiumDriver.findElementsByXPath("//android.widget.GridLayout[contains(@resource-id,'compact_movie_item')]");
 		int i = 1;
 		String strName = null, strPrice = null;
 		for(MobileElement mobelement : mobElements){
-			mobelement.findElement(By.xpath("//android.widget.TextView[contains(@resource-id,'title')")).getText();
-			mobelement.findElement(By.xpath("//android.widget.TextView[contains(@resource-id,'ypc_badge_text')]")).getText();
+			Thread.sleep(1000);
+			String mov =mobelement.findElementByXPath("//android.widget.TextView[contains(@resource-id,'title')]").getText();
+			System.out.println("Movie name "+mov);
+			mobelement.findElementByXPath("//android.widget.TextView[contains(@resource-id,'ypc_badge_text')]").getText();
 			moviesList.put(strName, strPrice);
 			if(i == 20){
 				break;
