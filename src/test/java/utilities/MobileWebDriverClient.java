@@ -10,6 +10,9 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import io.appium.java_client.MobileElement;
+import io.appium.java_client.TouchAction;
+import io.appium.java_client.touch.offset.PointOption;
+
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.interactions.touch.TouchActions;
@@ -21,6 +24,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Reporter;
 
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.MobileBy;
 
 public class MobileWebDriverClient {
 	
@@ -1127,6 +1131,10 @@ public class MobileWebDriverClient {
 	((JavascriptExecutor) myDriver).executeScript(scrollElementIntoMiddle, locator);
 }
 	
+	public void scroll() throws Exception {
+		new TouchAction(myDriver).press(PointOption.point(0, 0)).waitAction().moveTo(PointOption.point(0, 650)).release().perform();
+	}
+	
 	public void scrollToExact(MobileElement m) throws Exception {
 		TouchActions action = new TouchActions(myDriver);
 		action.scroll(m, 10, 100);
@@ -1134,6 +1142,14 @@ public class MobileWebDriverClient {
 
 
 	}
+	public void scrollAndClick(String visibleText) {
+		MobileElement element = (MobileElement) myDriver.findElement(MobileBy.AndroidUIAutomator(
+		        "new UiScrollable(new UiSelector().resourceId(\"com.android.vending:id/tab_recycler_view\")).getChildByText("
+		        + "new UiSelector().className(\"android.widget.TextView\"), \"Games We Are Playing\")"));
+
+		//Perform the action on the element
+		element.click();
+		}
 	
 	public void scrollWindowToFindElement(String locator) throws Exception {
 		        try {
