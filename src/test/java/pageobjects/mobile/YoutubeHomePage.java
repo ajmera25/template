@@ -7,31 +7,24 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import core.BasePage;
+import io.appium.java_client.AppiumDriver;
 
 public class YoutubeHomePage extends BasePage{
 
-	public YoutubeHomePage(WebDriver driver) {
+	public YoutubeHomePage(AppiumDriver driver) {
 		super(driver);
 	}
 
-	@FindBy(xpath = "//android.widget.Button[@content-desc='Trending']/android.widget.TextView")
+	@FindBy(xpath = "//android.widget.Button[@content-desc='Trending']")
 	WebElement mlnk_Trending;
 	
 	@FindBy(xpath = "//android.widget.ImageView[@content-desc='Movies']")
 	WebElement mlnk_Movies;
 	
-	@FindBy(id = "com.google.android.youtube:id/action_button")
+	@FindBy(xpath="//android.widget.TextView[contains(@resource-id,'action_button') and @text='GET MOVIES']")
 	WebElement mlnk_GetMovies;
 	
-	@FindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout"
-			+ "/android.widget.FrameLayout/android.widget.LinearLayout"
-			+ "/android.widget.FrameLayout/android.widget.FrameLayout"
-			+ "/android.view.ViewGroup/android.widget.FrameLayout[2]"
-			+ "/android.view.ViewGroup/android.view.ViewGroup"
-			+ "/android.widget.FrameLayout[2]/android.widget.FrameLayout"
-			+ "/androidx.viewpager.widget.ViewPager/android.view.ViewGroup"
-			+ "/android.support.v7.widget.RecyclerView/android.widget."
-			+ "LinearLayout[2]/android.widget.RelativeLayout/android.widget.TextView")
+	@FindBy(xpath="//android.widget.TextView[contains(@resource-id,'card_list_button') and @text='VIEW ALL']")
 	WebElement mlnk_ViewAll;
 	
 	String str_MoviesList = "com.google.android.youtube:id/title";
@@ -52,9 +45,11 @@ public class YoutubeHomePage extends BasePage{
 	public boolean clickMovies() throws Exception{
 		boolean bval = false;
 		try{
+			Thread.sleep(5000);
 			mlnk_Trending.click();
 			mlnk_Movies.click();
-			
+			mlnk_GetMovies.click();
+			mlnk_ViewAll.click();
 /*			String moviesLink = "//span[text()='Movies']";
 			String viewAllLink = "//paper-button[@aria-label='View all']";
 			pageWebDriverClient.waitForElementToBeClickable(moviesLink);
