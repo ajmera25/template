@@ -65,14 +65,14 @@ public class DriverManagerFactory {
 	
 	public void initializeMobileDriver() throws MalformedURLException {
 		DesiredCapabilities capabilities = new DesiredCapabilities();
-		capabilities.setCapability(CapabilityType.BROWSER_NAME, "chrome");
-	       capabilities.setCapability("deviceName", "9243934");
+//		capabilities.setCapability(CapabilityType.BROWSER_NAME, "chrome");
+	       capabilities.setCapability("deviceName", "JKC device");
 	       // capabilities.setCapability("deviceName", "192.168.0.27:5000");
-	        capabilities.setCapability("platformVersion", "9");
+//	        capabilities.setCapability("platformVersion", "9");
 	        capabilities.setCapability("platformName", "Android");
-	        /*capabilities.setCapability("appPackage", "com.google.android.youtube");
-	        capabilities.setCapability("appActivity", "com.google.android.apps.youtube.app.WatchWhileActivity");*/
-			setAppiumDriver(new AppiumDriver(new URL(hub), capabilities));	
+	        capabilities.setCapability("appPackage", "com.google.android.youtube");
+	        capabilities.setCapability("appActivity", "com.google.android.apps.youtube.app.WatchWhileActivity");
+			setAppiumDriver(new AppiumDriver(new URL("http://0.0.0.0:4723/wd/hub"), capabilities));	
 	}
 	
 	public void closeAllDriver() {

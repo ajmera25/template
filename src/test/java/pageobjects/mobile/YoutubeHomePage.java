@@ -1,37 +1,33 @@
 package pageobjects.mobile;
 
 import java.util.HashMap;
+import java.util.List;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import core.BasePage;
+import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.MobileElement;
 
 public class YoutubeHomePage extends BasePage{
 
-	public YoutubeHomePage(WebDriver driver) {
+	public YoutubeHomePage(AppiumDriver driver) {
 		super(driver);
 	}
 
-	@FindBy(xpath = "//android.widget.Button[@content-desc='Trending']/android.widget.TextView")
+	@FindBy(xpath = "//android.widget.Button[@content-desc='Trending']")
 	WebElement mlnk_Trending;
 	
 	@FindBy(xpath = "//android.widget.ImageView[@content-desc='Movies']")
 	WebElement mlnk_Movies;
 	
-	@FindBy(id = "com.google.android.youtube:id/action_button")
+	@FindBy(xpath="//android.widget.TextView[contains(@resource-id,'action_button') and @text='GET MOVIES']")
 	WebElement mlnk_GetMovies;
 	
-	@FindBy(xpath = "/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout"
-			+ "/android.widget.FrameLayout/android.widget.LinearLayout"
-			+ "/android.widget.FrameLayout/android.widget.FrameLayout"
-			+ "/android.view.ViewGroup/android.widget.FrameLayout[2]"
-			+ "/android.view.ViewGroup/android.view.ViewGroup"
-			+ "/android.widget.FrameLayout[2]/android.widget.FrameLayout"
-			+ "/androidx.viewpager.widget.ViewPager/android.view.ViewGroup"
-			+ "/android.support.v7.widget.RecyclerView/android.widget."
-			+ "LinearLayout[2]/android.widget.RelativeLayout/android.widget.TextView")
+	@FindBy(xpath="//android.widget.TextView[contains(@resource-id,'card_list_button') and @text='VIEW ALL']")
 	WebElement mlnk_ViewAll;
 	
 	String str_MoviesList = "com.google.android.youtube:id/title";
@@ -52,17 +48,12 @@ public class YoutubeHomePage extends BasePage{
 	public boolean clickMovies() throws Exception{
 		boolean bval = false;
 		try{
+			Thread.sleep(5000);
 			mlnk_Trending.click();
 			mlnk_Movies.click();
-			
-/*			String moviesLink = "//span[text()='Movies']";
-			String viewAllLink = "//paper-button[@aria-label='View all']";
-			pageWebDriverClient.waitForElementToBeClickable(moviesLink);
-			pageWebDriverClient.click(moviesLink);
-			pageWebDriverClient.waitForElementToBeClickable(viewAllLink);
-			pageWebDriverClient.click(viewAllLink);
-			bval = pageWebDriverClient.waitForVisibilityThenCheckIsWebElementDisplayed("//span[text()='New Releases']");
-*/		}catch(Exception e){
+			mlnk_GetMovies.click();
+			mlnk_ViewAll.click();
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 		return bval;
@@ -70,15 +61,18 @@ public class YoutubeHomePage extends BasePage{
 	
 	public HashMap<String, String> getMoviesList () {
 		HashMap<String, String> moviesList = new HashMap<String, String>();
-		String movieTitle = "//span[@id='video-title']";
-		String movePrice = "//span[contains(text(),'From')]";
-		String movie = "//ytd-grid-movie-renderer";
 		try{
-			
-			for (int i=1; i<=20; i++) {
-				moviesList.put(pageWebDriverClient.getText(movie+"["+i+"]"+movieTitle),pageWebDriverClient.getText(movie+"["+i+"]"+movePrice));
+		@SuppressWarnings("unchecked")
+		List<MobileElement> mobElements = appiumDriver.findElements(By.xpath("com.google.android.youtube:id/title"));
+		int i = 1;
+		for(MobileElement mobelement : mobElements){
+			moviesList.put(mobelement.getText(), "");
+			if(i == 20){
+				break;
 			}
-			
+			i++;
+		}	
+		System.out.println(moviesList);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
