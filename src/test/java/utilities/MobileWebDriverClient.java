@@ -9,10 +9,6 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
-import io.appium.java_client.MobileElement;
-import io.appium.java_client.TouchAction;
-import io.appium.java_client.touch.offset.PointOption;
-
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.interactions.touch.TouchActions;
@@ -25,6 +21,9 @@ import org.testng.Reporter;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileBy;
+import io.appium.java_client.MobileElement;
+import io.appium.java_client.TouchAction;
+import io.appium.java_client.touch.offset.PointOption;
 
 public class MobileWebDriverClient {
 	
@@ -315,7 +314,7 @@ public class MobileWebDriverClient {
 	 * @throws Exception
 	 */
 	public MobileElement scrollWindowVerticallyToClickableElement(MobileElement element) throws Exception {
-		JavascriptExecutor jse = (JavascriptExecutor)myDriver;
+		JavascriptExecutor jse = myDriver;
 		int winSize = 0;
 		int eleYPosition = 0;
 		int count = 1;
@@ -339,7 +338,7 @@ public class MobileWebDriverClient {
 }
 	
 	public boolean isDialogItemVisibleVertically(String xPath, String dialog_obj_class) throws Exception {
-		JavascriptExecutor jse = (JavascriptExecutor)myDriver;
+		JavascriptExecutor jse = myDriver;
 		int count = 0;
 		String javascript = "document.querySelectorAll('" + dialog_obj_class + "')[0].scrollTop = ";
 		jse.executeScript(javascript + "0");
@@ -354,7 +353,7 @@ public class MobileWebDriverClient {
 
 	public boolean isItemVisibleVerticallyInScrollableObject(String xPath, String scrollable_obj_css) throws Exception {
 		boolean bval = false;
-		JavascriptExecutor jse = (JavascriptExecutor)myDriver;
+		JavascriptExecutor jse = myDriver;
 		int count = 0;
 		String javascript = "document.querySelectorAll('" + scrollable_obj_css + "')[0].scrollTop = ";
 		String javascript_returnScrollHeight = "return document.querySelectorAll('" + scrollable_obj_css + "')[0].scrollHeight";
@@ -384,7 +383,7 @@ public class MobileWebDriverClient {
 	}
 	
 	public boolean isItemVisibleHorizontallyInScrollableObject(String xPath, String scrollable_obj_css) throws Exception {
-		JavascriptExecutor jse = (JavascriptExecutor)myDriver;
+		JavascriptExecutor jse = myDriver;
 		int count = 0;
 		String javascript = "document.querySelectorAll('" + scrollable_obj_css + "')[0].scrollLeft = ";
 		try{
@@ -727,7 +726,7 @@ public class MobileWebDriverClient {
 	 * @throws Exception
 	 */
 	public void JSClick(MobileElement element) throws Exception {
-		JavascriptExecutor js = (JavascriptExecutor) myDriver;
+		JavascriptExecutor js = myDriver;
 		try {
 			js.executeScript("arguments[0].click();", element);
 		}catch(StaleElementReferenceException ex) {
@@ -1132,12 +1131,12 @@ public class MobileWebDriverClient {
 }
 	
 	public void scroll() throws Exception {
-		new TouchAction(myDriver).press(PointOption.point(0, 0)).waitAction().moveTo(PointOption.point(0, 650)).release().perform();
+		new TouchAction(myDriver).press(PointOption.point(0, 300)).waitAction().moveTo(PointOption.point(0, 100)).release().perform();
 	}
 	
 	public void scrollToExact(MobileElement m) throws Exception {
 		TouchActions action = new TouchActions(myDriver);
-		action.scroll(m, 10, 100);
+		action.scroll(m, 100, 100);
 		action.perform();
 
 
