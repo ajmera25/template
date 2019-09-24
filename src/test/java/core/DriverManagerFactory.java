@@ -16,6 +16,7 @@ public class DriverManagerFactory {
 	private static ThreadLocal<RemoteWebDriver> threadDesktopWebDriver = new ThreadLocal<RemoteWebDriver>();
 //	String hub = System.getProperty("hub");
 	String hub="http://localhost:4444/wd/hub";
+	
 
 	public AppiumDriver getAppiumDriver() {
 		AppiumDriver wdriver = threadAppiumDriver.get();
