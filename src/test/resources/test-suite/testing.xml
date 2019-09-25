@@ -2,15 +2,20 @@
 
 <suite name="smokeTests" parallel="tests"  thread-count="20">
 	
-	<listeners>
+	<!-- <listeners>
 		<listener class-name="core.TestNGListenerAdapter" />
-	</listeners>
+	</listeners> -->
 
- 	<test  name = "Twitter GUI">
+	<test  name = "Twitter">
+		<classes>
+			<class name="testcases.APIWithOAuth"></class>
+		</classes>
+	</test>
+ 	<!-- <test  name = "Twitter GUI">
 		<classes>
 			<class name="testcases.MaximumAttentionTweet"></class>
 		</classes>
-	</test>
+	</test> -->
 
 	<!-- <test  name = "Twitter API">
 		<classes>

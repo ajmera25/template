@@ -46,14 +46,14 @@ public class DriverManagerFactory {
 		}
 	}
 	
-	public Object getDriver(String platform) {
+	/*public Object getDriver(String platform) {
 		if(platform.equals("desktop")) {
 			return getDesktopWebDriver();
 		} else if(platform.equals("mobile")) {
 			return getAppiumDriver();
 		}
 		return null;
-	}
+	}*/
 	
 	public void initializeChromeWebDriver()  {
 		DesiredCapabilities capabilities = new DesiredCapabilities();

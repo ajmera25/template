@@ -22,7 +22,7 @@ public class APIUtils {
 			HttpUrl url = new HttpUrl.Builder()
 					.scheme("https")
 					.host("api.twitter.com")
-					.addPathSegments("/1.1/statuses/user_timeline.json")
+					.addPathSegments("1.1/statuses/user_timeline.json")
 					.addQueryParameter("screen_name","stepin_forum")
 					.build();
 			
@@ -31,7 +31,8 @@ public class APIUtils {
 				      .build();
 			
 			 Response response = client.newCall(request).execute();
-			// JSONObject object = new JSONObject(response.body().string());
+			 
+			 System.out.println("Response:: " + response.body().string());
 			 JSONArray array = new JSONArray(response.body().string());
 			 HashMap<String,Integer> tweetImpressions = new HashMap<String,Integer>();
 			 System.out.println(array);
@@ -46,7 +47,6 @@ public class APIUtils {
 				 if(MaxImpression<currentImpression) {
 					 MaxImpression = currentImpression;
 					 tweetId = str;
-					 
 				 }
 			 }
 			 System.out.println(tweetId  +  " " + MaxImpression);

@@ -40,7 +40,7 @@ public class SampleAPI{
 		OkHttpClient client = new OkHttpClient();
 
 		HttpUrl url = new HttpUrl.Builder().scheme("https").host("api.twitter.com")
-				.addPathSegments("/1.1/statuses/retweeters/ids.json").addQueryParameter("id", tweetId)
+				.addPathSegments("1.1/statuses/retweeters/ids.json").addQueryParameter("id", tweetId)
 				.addQueryParameter("stringify_ids", "true").build();
 
 		Request request = new Request.Builder().url(url).build();
@@ -56,7 +56,7 @@ public class SampleAPI{
 		List<String> tweetProfile = new ArrayList<>();
 		OkHttpClient client = new OkHttpClient();
 
-		HttpUrl url = new HttpUrl.Builder().scheme("https").host("api.twitter.com").addPathSegments("/1.1/users/lookup.json")
+		HttpUrl url = new HttpUrl.Builder().scheme("https").host("api.twitter.com").addPathSegments("1.1/users/lookup.json")
 				.addQueryParameter("user_id",retweeterID).build();
 
 		Request request = new Request.Builder().url(url).build();

@@ -2,6 +2,7 @@
 
 <html>
 <head>
+<script src="twitterDetails.js"></script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"> </script>
 
 <script>
@@ -9,10 +10,8 @@
     $(function() {
 
 
-   var people = [];
-var table = document.getElementById("userdata");
-   $.getJSON('twitterDetails.json', function(data) {
-      
+var data =tweetData;
+var table = document.getElementById("userdata"); 
 Object.keys(data).forEach(function(key){
 var tr = table.insertRow(-1); 
     var value = data[key];
@@ -24,8 +23,6 @@ var tr = table.insertRow(-1);
     }
     console.log(key + ':' + value[0]);
 });
-});
- 
 });
 </script>
 </head>

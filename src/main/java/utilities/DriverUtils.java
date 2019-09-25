@@ -22,7 +22,7 @@ import io.cucumber.core.api.Scenario;
 
 public class DriverUtils {
 
-	public static  void takeScreenShot(ITestResult result, WebDriver driver) {
+	public static void takeScreenShot(ITestResult result, WebDriver driver) {
 		try {
 		driver.switchTo().defaultContent();
 		WebDriver augmentedDriver = new Augmenter().augment(driver);
